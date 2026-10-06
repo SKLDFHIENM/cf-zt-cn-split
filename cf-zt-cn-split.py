@@ -105,7 +105,7 @@ def update_split_tunnels(cidrs, domains):
     else:
         url = f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/devices/policy/{MODE}"
 
-    resp = requests.put(url, json=routes, headers=HEADERS\, timeout=30)
+    resp = requests.put(url, json=routes, headers=HEADERS, timeout=30)
     if resp.status_code in (200, 204):
         print(f"Sync Successful! {len(routes)} routes | Mode: {MODE}")
     else:
