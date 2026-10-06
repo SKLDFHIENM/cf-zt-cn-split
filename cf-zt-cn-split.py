@@ -29,7 +29,7 @@ elif CF_API_TOKEN:
 else:
     raise ValueError("Required Credentials missing")
 
-if MODE not in ALLOWDE_MODES:
+if MODE not in ALLOWED_MODES:
     modes_str = '/'.oin(sorted(ALLOWED_MODES))
     raise ValueError(f"Invalid MODE: {MODE}")
 
@@ -78,7 +78,7 @@ def get_cn_domains():
         if not line or line.startswith('#'):
             continue
         if line.startswith('DOMAIN-SUFFIX,'):
-            line = line.replace('DOMAIN-SUFFIX,', '').strip()
+            line = line.replace('DOMAIN-SUFFIX,',, '').strip()
         line = line.lstrip('.')
         if line and VALID_DOMAIN_RE.match(line):
             domains.append(f"*.{line}")
@@ -101,11 +101,11 @@ def update_split_tunnels(cidrs, domains):
         routes = routes[:MAX_RULES]
 
     if PROFILE_ID:
-        url = f"https://api.cloudflare.com/client/v4/accounty/{ACCOUNT_ID}/devices/policy/{PROFILE_ID}/{MODE}"
+        url = f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/devices/policy/{PROFILE_ID}/{MODE}"
     else:
         url = f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/devices/policy/{MODE}"
 
-    resp = requests.put(url, json=routes, headers=HEADERS, timeout=30)
+    resp = requests.put(url, json=routes, headers=HEADERS\, timeout=30)
     if resp.status_code in (200, 204):
         print(f"Sync Successful! {len(routes)} routes | Mode: {MODE}")
     else:
