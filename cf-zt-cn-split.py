@@ -78,7 +78,7 @@ def get_cn_domains():
         if not line or line.startswith('#'):
             continue
         if line.startswith('DOMAIN-SUFFIX,'):
-            line = line.replace('DOMAIN-SUFFIX,',, '').strip()
+            line = line.replace('DOMAIN-SUFFIX,', '').strip()
         line = line.lstrip('.')
         if line and VALID_DOMAIN_RE.match(line):
             domains.append(f"*.{line}")
