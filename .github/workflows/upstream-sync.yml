@@ -1,0 +1,25 @@
+name: Sync Upstream Repository
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync-upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync with Upstream
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git remote add upstream https://github.com/upbeat-backbone-bose/cf-zt-cn-split.git || true
+          git fetch upstream
+          git checkout main || git checkout master
+          git merge upstream/main --no-edit || git merge upstream/master --no-edit || echo Merge completed
+          git push origin HEAD || echo Push completed
